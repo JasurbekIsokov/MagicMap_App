@@ -34,6 +34,13 @@ class Yugurish extends Workout {
   }
 }
 
+class Velo extends Workout {
+  constructor(distance, duration, coords, elevation) {
+    super(distance, duration, coords);
+    this.elevation = elevation;
+  }
+}
+
 class App {
   constructor() {
     this._getPosition();
