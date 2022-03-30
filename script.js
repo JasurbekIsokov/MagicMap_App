@@ -27,6 +27,13 @@ class Workout {
   }
 }
 
+class Yugurish extends Workout {
+  constructor(distance, duration, coords, cadence) {
+    super(distance, duration, coords);
+    this.cadence = cadence;
+  }
+}
+
 class App {
   constructor() {
     this._getPosition();
