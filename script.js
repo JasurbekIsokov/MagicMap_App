@@ -16,16 +16,16 @@ let langg = 0;
 let formEvent = '';
 let map = '';
 
-// class Joy {
-//   date = new Date();
-//   id = Date.now().slice(-7);
+class Workout {
+  date = new Date();
+  id = Date.now().slice(-7);
 
-//   constructor(qayergaBoryapmiz, qayerdanBoryapmiz, tezlik) {
-//     this.qayergaBoryapmiz = qayergaBoryapmiz;
-//     this.qayerdanBoryapmiz = qayerdanBoryapmiz;
-//     this.tezlik = tezlik;
-//   }
-// }
+  constructor(distance, duration, coords) {
+    this.distance = distance;
+    this.duration = duration;
+    this.coords = coords;
+  }
+}
 
 class App {
   constructor() {
