@@ -16,9 +16,11 @@ let langg = 0;
 let formEvent = '';
 let map = '';
 
+//  - - - -   - - - - -    - - - -   - - - - -
+
 class Workout {
   date = new Date();
-  id = Date.now().slice(-7);
+  id = (Date.now() + '').slice(-8);
 
   constructor(distance, duration, coords) {
     this.distance = distance;
@@ -27,24 +29,42 @@ class Workout {
   }
 }
 
+//  - - - -   - - - - -    - - - -   - - - - -
+
 class Yugurish extends Workout {
   constructor(distance, duration, coords, cadence) {
     super(distance, duration, coords);
     this.cadence = cadence;
+    this.calcTime();
+  }
+
+  calcTime() {
+    this.tezlikniTop = this.distance / this.duration;
+    return this.tezlik;
   }
 }
+
+//  - - - -   - - - - -    - - - -   - - - - -
 
 class Velo extends Workout {
   constructor(distance, duration, coords, elevation) {
     super(distance, duration, coords);
     this.elevation = elevation;
+    this.calcSpead();
+  }
+
+  calcSpead() {
+    this.tezlikniTop = this.distance / this.duration;
+    return this.tezlik;
   }
 }
+
+//  - - - -   - - - - -    - - - -   - - - - -
 
 class App {
   constructor() {
     this._getPosition();
-    form.addEventListener(`submit`, this._submitForm);
+    form.addEventListener(`submit`, this._submitForm.bind(this));
     inputType.addEventListener('change', this._toggleSelect);
   }
 
@@ -64,7 +84,7 @@ class App {
   _showMap(e) {
     latt = e.coords.latitude;
     langg = e.coords.longitude;
-    isCliked();
+    // isCliked();
 
     map = L.map('map').setView([latt, langg], 13);
 
@@ -109,6 +129,8 @@ class App {
       )
       .openPopup();
 
+    this._createObject();
+
     inputDistance.value =
       inputElevation.value =
       inputDuration.value =
@@ -121,6 +143,45 @@ class App {
   _toggleSelect() {
     inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
     inputElevation.closest(`.form__row`).classList.toggle(`form__row--hidden`);
+  }
+
+  // Forma malumotlarini Objectga berish
+
+  _createObject() {
+    let mashq = '';
+
+    const checkNumber = (...inputs) => {
+      return inputs.every(val => Number.isFinite(val));
+    };
+
+    const checkNumberPositive = (...inputs) => {
+      return inputs.every(val => val > 0);
+    };
+
+    let distance = +inputDistance.value;
+    let duration = +inputDuration.value;
+    let type = inputType.value;
+
+    if (type === 'running') {
+      let cadence = inputCadence.value;
+      if (
+        !checkNumber(distance, duration, cadence) &&
+        !checkNumberPositive(distance, duration, cadence)
+      ) {
+        return alert(`Musbat sonlarni kiriting`);
+      }
+
+      mashq = new Yugurish(
+        distance,
+        duration,
+        [formEvent.latlng.lat, formEvent.latlng.lng],
+        cadence
+      );
+    }
+
+    if (type === 'cycling') {
+      let cycling = inputType.value;
+    }
   }
 }
 
