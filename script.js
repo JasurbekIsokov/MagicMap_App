@@ -68,8 +68,6 @@ class App {
     map.on(`click`, function (e) {
       formEvent = e;
 
-      console.log(e);
-
       form.classList.remove(`hidden`);
 
       inputDistance.focus();
@@ -104,19 +102,16 @@ class App {
         '';
   }
 
+  //  Formdagi optionni tanlanganda o'zgartirish kiritish
+
   _toggleSelect() {
     inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
     inputElevation.closest(`.form__row`).classList.toggle(`form__row--hidden`);
   }
 }
 
-function isCliked() {
-  console.log('navigatorga ruhsat berildi');
-}
-
 // mapning ustiga bosilganda formni chiqardik ,
 //  locationdagi iconni form submit bo'lganda chiqardik
-
 // formni piyoda va velosipedda yurishni tanlashni qo'shdik.
 
 const magicMap = new App();
