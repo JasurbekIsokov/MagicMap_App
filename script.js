@@ -31,6 +31,7 @@ class App {
   constructor() {
     this._getPosition();
     form.addEventListener(`submit`, this._submitForm);
+    inputType.addEventListener('change', this._toggleSelect);
   }
 
   // Hozirgi o'rnimizni cordinatalarini olish metodi
@@ -102,6 +103,11 @@ class App {
       inputCadence.value =
         '';
   }
+
+  _toggleSelect() {
+    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+    inputElevation.closest(`.form__row`).classList.toggle(`form__row--hidden`);
+  }
 }
 
 function isCliked() {
@@ -110,11 +116,6 @@ function isCliked() {
 
 // mapning ustiga bosilganda formni chiqardik ,
 //  locationdagi iconni form submit bo'lganda chiqardik
-
-inputType.addEventListener('change', function () {
-  inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
-  inputElevation.closest(`.form__row`).classList.toggle(`form__row--hidden`);
-});
 
 // formni piyoda va velosipedda yurishni tanlashni qo'shdik.
 
