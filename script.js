@@ -30,6 +30,7 @@ let map = '';
 class App {
   constructor() {
     this._getPosition();
+    form.addEventListener(`submit`, this._submitForm);
   }
 
   // Hozirgi o'rnimizni cordinatalarini olish metodi
@@ -75,37 +76,37 @@ class App {
   }
 
   // forma sabmit bo'lsa markerni chiqarish
+
+  _submitForm(e) {
+    e.preventDefault();
+
+    L.marker([formEvent.latlng.lat, formEvent.latlng.lng], { draggable: true })
+      .addTo(map)
+      .bindPopup(
+        L.popup({
+          maxWidth: 160,
+          minWidth: 40,
+          autoClose: false,
+          closeOnClick: false,
+          className: `running-popup`,
+        })
+          .setLatLng([formEvent.latlng.lat, formEvent.latlng.lng])
+          .setContent('<p>Hello world!</p>')
+          .openOn(map)
+      )
+      .openPopup();
+
+    inputDistance.value =
+      inputElevation.value =
+      inputDuration.value =
+      inputCadence.value =
+        '';
+  }
 }
 
 function isCliked() {
   console.log('navigatorga ruhsat berildi');
 }
-
-form.addEventListener(`submit`, function (e) {
-  e.preventDefault();
-
-  L.marker([formEvent.latlng.lat, formEvent.latlng.lng], { draggable: true })
-    .addTo(map)
-    .bindPopup(
-      L.popup({
-        maxWidth: 160,
-        minWidth: 40,
-        autoClose: false,
-        closeOnClick: false,
-        className: `running-popup`,
-      })
-        .setLatLng([formEvent.latlng.lat, formEvent.latlng.lng])
-        .setContent('<p>Hello world!</p>')
-        .openOn(map)
-    )
-    .openPopup();
-
-  inputDistance.value =
-    inputElevation.value =
-    inputDuration.value =
-    inputCadence.value =
-      '';
-});
 
 // mapning ustiga bosilganda formni chiqardik ,
 //  locationdagi iconni form submit bo'lganda chiqardik
