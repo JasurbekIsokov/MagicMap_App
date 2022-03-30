@@ -64,7 +64,7 @@ class Velo extends Workout {
 class App {
   constructor() {
     this._getPosition();
-    form.addEventListener(`submit`, this._submitForm.bind(this));
+    form.addEventListener(`submit`, this._createObject.bind(this));
     inputType.addEventListener('change', this._toggleSelect);
   }
 
@@ -84,7 +84,6 @@ class App {
   _showMap(e) {
     latt = e.coords.latitude;
     langg = e.coords.longitude;
-    // isCliked();
 
     map = L.map('map').setView([latt, langg], 13);
 
@@ -110,10 +109,8 @@ class App {
 
   // forma sabmit bo'lsa markerni chiqarish
 
-  _submitForm(e) {
-    e.preventDefault();
-
-    L.marker([formEvent.latlng.lat, formEvent.latlng.lng], { draggable: true })
+  _addMarker(mashq) {
+    L.marker([mashq.coords[0], mashq.coords[1]], { draggable: true })
       .addTo(map)
       .bindPopup(
         L.popup({
@@ -123,13 +120,13 @@ class App {
           closeOnClick: false,
           className: `running-popup`,
         })
-          .setLatLng([formEvent.latlng.lat, formEvent.latlng.lng])
+          .setLatLng([mashq.coords[0], mashq.coords[1]])
           .setContent('<p>Hello world!</p>')
           .openOn(map)
       )
       .openPopup();
 
-    this._createObject();
+    // this._createObject();
 
     inputDistance.value =
       inputElevation.value =
@@ -147,7 +144,9 @@ class App {
 
   // Forma malumotlarini Objectga berish
 
-  _createObject() {
+  _createObject(e) {
+    e.preventDefault();
+
     let mashq = '';
 
     const checkNumber = (...inputs) => {
@@ -177,6 +176,8 @@ class App {
         [formEvent.latlng.lat, formEvent.latlng.lng],
         cadence
       );
+
+      this._addMarker(mashq);
     }
 
     if (type === 'cycling') {
