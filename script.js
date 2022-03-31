@@ -32,6 +32,7 @@ class Workout {
 //  - - - -   - - - - -    - - - -   - - - - -
 
 class Yugurish extends Workout {
+  type = 'running';
   constructor(distance, duration, coords, cadence) {
     super(distance, duration, coords);
     this.cadence = cadence;
@@ -44,9 +45,17 @@ class Yugurish extends Workout {
   }
 }
 
+class Running extends Workout {
+  constructor(distance, duration, coords, cadence) {
+    super(distance, duration, coords, elevgain);
+    this.elevgain = this.elevgain;
+  }
+}
+
 //  - - - -   - - - - -    - - - -   - - - - -
 
 class Velo extends Workout {
+  type = 'cycling';
   constructor(distance, duration, coords, elevation) {
     super(distance, duration, coords);
     this.elevation = elevation;
@@ -164,7 +173,7 @@ class App {
     if (type === 'running') {
       let cadence = inputCadence.value;
       if (
-        !checkNumber(distance, duration, cadence) &&
+        !checkNumber(distance, duration, cadence) ||
         !checkNumberPositive(distance, duration, cadence)
       ) {
         return alert(`Musbat sonlarni kiriting`);
@@ -176,13 +185,43 @@ class App {
         [formEvent.latlng.lat, formEvent.latlng.lng],
         cadence
       );
-
-      this._addMarker(mashq);
     }
 
     if (type === 'cycling') {
-      let cycling = inputType.value;
+      let elevation = inputElevation.value;
+      if (
+        !checkNumber(distance, duration, elevation) ||
+        !checkNumberPositive(distance, duration)
+      ) {
+        return alert(`Musbat sonlarni kiriting`);
+      }
+
+      mashq = new Velo(
+        distance,
+        duration,
+        [formEvent.latlng.lat, formEvent.latlng.lng],
+        elevation
+      );
     }
+
+    this._addMarker(mashq);
+  }
+
+  // Ro'yhatni shakllantirish
+
+  _renderList(obj) {
+    let html = `<li class="workout workout--${obj.type}" data-id="${obj.id}">
+    <h2 class="workout__title">Running on April 14</h2>
+    <div class="workout__details">
+      <span class="workout__icon">🏃‍♂️</span>
+      <span class="workout__value">5.2</span>
+      <span class="workout__unit">km</span>
+    </div>
+    <div class="workout__details">
+      <span class="workout__icon">⏱</span>
+      <span class="workout__value">24</span>
+      <span class="workout__unit">min</span>
+    </div>`;
   }
 }
 
