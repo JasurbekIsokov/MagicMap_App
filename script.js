@@ -46,10 +46,6 @@ class Workout {
       'November',
       'December',
     ];
-
-    this.malumot = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${
-      months[this.date.getMonth()]
-    }${this.date.getDate()}`;
   }
 }
 
@@ -81,15 +77,39 @@ class App {
     latitude = e.coords.latitude;
     longitude = e.coords.longitude;
 
-    map = L.map('map').setView([latitude, longitude], 13);
+    console.log(latitude, longitude);
+
+    map = L.map('map').setView([latitude, longitude], 18);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
+
+    this._addMarker();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // Markerni mapda chiqarish
+
+  _addMarker() {
+    L.marker([latitude, longitude], { draggable: true })
+      .addTo(map)
+      .bindPopup(
+        L.popup({
+          maxWidth: 160,
+          minWidth: 40,
+          autoClose: false,
+          closeOnClick: false,
+          className: `cycling-popup`,
+        })
+          .setLatLng([latitude, longitude])
+          .setContent('Select')
+          .openOn(map)
+      )
+      .openPopup();
+  }
 }
 
 // ------------------------------------------------------------------------------------------------------
