@@ -14,21 +14,28 @@ const inputElevation = document.querySelector('.form__input--elevation');
 // Yangi variablelar
 
 let latitude = 0; // geolocationdagi latitudeni oladi
-let longitude = 0; // geolocationni longitudini oladi
+let longitude = 0; // geolocationdagi longitudini oladi
 let map = ''; // mapga latitude va longitudeni berish
+let latitude1 = 0; // geolocationdagi 1-manzil latitudeni olish
+let longitude1 = 0; // geolocationdagi 1-manzil latitudeni olish
+let latitude2 = 0; // geolocationdagi 2-manzil latitudeni  olish
+let longitude2 = 0; // geolocationdagi 2-manzil longitudeni olish
+let firstPosition = null;
+let secondPosition = null;
+let created = 0;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Umumiy bosh classni yaratish
 
 class Workout {
-  date = new Date();
-  id = (Date.now() + '').slice(-8);
+  // date = new Date();
+  // id = (Date.now() + '').slice(-8);
 
   constructor(distance, duration, coords) {
-    this.distance = distance;
-    this.duration = duration;
-    this.coords = coords;
+    // this.distance = distance;
+    // this.duration = duration;
+    // this.coords = coords;
   }
 
   _setTavsif() {
@@ -55,14 +62,15 @@ class Workout {
 
 class App {
   constructor() {
-    this._getPosition();
+    this._getPosition.call(this);
+    document.addEventListener('keydown', e => this._position.bind(this));
   }
 
   // Hozirgi o'rnimizni cordinatalarini oluvchi function
 
   _getPosition() {
     navigator.geolocation.getCurrentPosition(
-      this._showMap.bind(this),
+      e => this._showMap(e),
       function () {
         alert(`Sizning turgan o'rninggizni ololmadim`);
       }
@@ -94,7 +102,7 @@ class App {
   // Markerni mapda chiqarish
 
   _addMarker() {
-    L.marker([latitude, longitude], { draggable: true })
+    firstPosition = L.marker([latitude, longitude], { draggable: true })
       .addTo(map)
       .bindPopup(
         L.popup({
@@ -102,13 +110,29 @@ class App {
           minWidth: 40,
           autoClose: false,
           closeOnClick: false,
-          className: `cycling-popup`,
+          className: `${created == 1 ? 'running' : 'cycling'}-popup`,
         })
           .setLatLng([latitude, longitude])
           .setContent('Select')
           .openOn(map)
       )
       .openPopup();
+
+    created++;
+    console.log(created);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  _position(e) {
+    // e.preventDefault();
+
+    if (e.key != 'Enter' || created > 2) return;
+    else if (created === 1) {
+      console.log('s');
+      firstPosition.dragging.disable();
+      this._addMarker();
+    }
   }
 }
 
