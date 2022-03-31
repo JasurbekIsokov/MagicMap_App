@@ -103,6 +103,13 @@ class App {
 
   _addMarker() {
     firstPosition = L.marker([latitude, longitude], { draggable: true })
+      .on('move', e => {
+        created == 1 ? (latitude2 = e.latlng.lat) : (latitude1 = e.latlng.lat);
+        created == 1
+          ? (longitude2 = e.latlng.lng)
+          : (longitude1 = e.latlng.lng);
+        console.log(created);
+      })
       .addTo(map)
       .bindPopup(
         L.popup({
@@ -128,18 +135,47 @@ class App {
     else if (created === 1) {
       firstPosition.dragging.disable();
       this._addMarker();
-      latitude1 = firstPosition._latlng.lat;
-      longitude1 = firstPosition._latlng.lng;
+      // latitude1 = firstPosition._latlng.lat;
+      // longitude1 = firstPosition._latlng.lng;
 
       console.log(latitude1, longitude1);
     } else {
       firstPosition.dragging.disable();
-      latitude2 = firstPosition._latlng.lat;
-      longitude2 = firstPosition._latlng.lng;
-
+      // latitude2 = firstPosition._latlng.lat;
+      // longitude2 = firstPosition._latlng.lng;
+      this._createRoute();
       console.log(latitude2, longitude2);
     }
   }
+
+  // Route(yo'l)ni chizish
+
+  _createRoute() {
+    let road = L.Routing.control({
+      routWhitleDragging: false,
+      createMarker: function () {
+        return null;
+      },
+      waypoints: [
+        L.latLng(latitude1, longitude1),
+        L.latLng(latitude2, longitude2),
+      ],
+      lineOptions: {
+        styles: [{ color: 'blue', opacity: 0.5, weight: 5 }],
+      },
+    })
+      .on('routesfound', e => e)
+      .addTo(map);
+    console.log(road);
+
+    let btn = document.querySelector('.leaflet-routing-container');
+    btn.addEventListener('click', e => {
+      console.log('click-btn');
+      btn.classList.toggle('leaflet-routing-container-hide');
+    });
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 }
 
 // ------------------------------------------------------------------------------------------------------
