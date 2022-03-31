@@ -1,7 +1,6 @@
 'use strict';
 
 // prettier-ignore
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
@@ -27,6 +26,27 @@ class Workout {
     this.duration = duration;
     this.coords = coords;
   }
+
+  _setTavsif() {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    this.malumot = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${
+      months[this.date.getMonth()]
+    }${this.date.getDate()}`;
+  }
 }
 
 //  - - - -   - - - - -    - - - -   - - - - -
@@ -37,6 +57,7 @@ class Yugurish extends Workout {
     super(distance, duration, coords);
     this.cadence = cadence;
     this.calcTime();
+    this._setTavsif();
   }
 
   calcTime() {
