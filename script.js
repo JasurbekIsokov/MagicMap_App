@@ -63,7 +63,7 @@ class Workout {
 class App {
   constructor() {
     this._getPosition.call(this);
-    document.addEventListener('keydown', e => this._position.bind(this));
+    document.addEventListener('keydown', e => this._position(e));
   }
 
   // Hozirgi o'rnimizni cordinatalarini oluvchi function
@@ -110,7 +110,7 @@ class App {
           minWidth: 40,
           autoClose: false,
           closeOnClick: false,
-          className: `${created == 1 ? 'running' : 'cycling'}-popup`,
+          className: `${created == 0 ? 'cycling' : 'running'}-popup`,
         })
           .setLatLng([latitude, longitude])
           .setContent('Select')
@@ -119,19 +119,25 @@ class App {
       .openPopup();
 
     created++;
-    console.log(created);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   _position(e) {
-    // e.preventDefault();
-
     if (e.key != 'Enter' || created > 2) return;
     else if (created === 1) {
-      console.log('s');
       firstPosition.dragging.disable();
       this._addMarker();
+      latitude1 = firstPosition._latlng.lat;
+      longitude1 = firstPosition._latlng.lng;
+
+      console.log(latitude1, longitude1);
+    } else {
+      firstPosition.dragging.disable();
+      latitude2 = firstPosition._latlng.lat;
+      longitude2 = firstPosition._latlng.lng;
+
+      console.log(latitude2, longitude2);
     }
   }
 }
