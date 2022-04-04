@@ -1,6 +1,8 @@
 :root {
-  --color-brand--1: #700303;
+  --color-brand--1: #ffb545;
   --color-brand--2: #00c46a;
+  --color-unselected: rgb(180, 20, 20);
+  --color-selected: #00c46a;
 
   --color-dark--1: #2d3439;
   --color-dark--2: #42484d;
@@ -29,7 +31,7 @@ body {
   overscroll-behavior-y: none;
 
   background-color: #fff;
-  padding: 2.5rem;
+  padding: 0;
 
   display: flex;
 }
@@ -168,7 +170,12 @@ a:visited {
 }
 
 .form__btn {
-  display: none;
+  position: absolute;
+  right: 0;
+  display: grid;
+  padding: 0.6rem 2.7rem;
+  margin: 1.3rem 0;
+  cursor: pointer;
 }
 
 .copyright {
@@ -217,4 +224,18 @@ a:visited {
 }
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
+}
+.selected-popup .leaflet-popup-content-wrapper {
+  border-left: 5px solid var(--color-selected);
+}
+.unselected-popup .leaflet-popup-content-wrapper {
+  border-left: 5px solid var(--color-unselected);
+}
+.form-2.hidden {
+  display: none;
+}
+
+.form-2 {
+  position: relative;
+  padding-bottom: 8rem;
 }

@@ -5,7 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="shortcut icon" type="image/png" href="/icon.png" />
+    <!-- leaflet css
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+    leaflet js
+  <script defer src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" /> -->
 
+    <!-- leaflet css -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
@@ -14,24 +24,41 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"
     />
+    <!-- leaflet js -->
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-
     <link rel="stylesheet" href="style.css" />
 
     <script defer src="script.js"></script>
     <title>mapty // Map your workouts</title>
   </head>
+
   <body>
     <div class="sidebar">
       <img src="logo.png" alt="Logo" class="logo" />
 
       <ul class="workouts">
+        <form class="form-2">
+          <div class="form__row">
+            <label class="form__label">Type</label>
+            <select class="form__input type__tour">
+              <option value="running">On Foot</option>
+              <option value="carring">In the Car</option>
+              <option value="cycling">On the Bike</option>
+            </select>
+          </div>
+
+          <div class="form__row">
+            <label class="form__label">Your Speed</label>
+            <input
+              disabled
+              class="form__input speed"
+              placeholder="50 smp/min"
+            />
+          </div>
+          <button class="form__btn">OK</button>
+        </form>
+
         <form class="form hidden">
           <div class="form__row">
             <label class="form__label">Type</label>
@@ -116,17 +143,6 @@
           </div>
         </li> -->
       </ul>
-
-      <p class="copyright">
-        &copy; Copyright by
-        <a
-          class="twitter-link"
-          target="_blank"
-          href="https://twitter.com/jonasschmedtman"
-          >Jonas Schmedtmann</a
-        >. Use for learning or your portfolio. Don't use to teach. Don't claim
-        as your own.
-      </p>
     </div>
 
     <div id="map"></div>
